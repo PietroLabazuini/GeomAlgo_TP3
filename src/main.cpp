@@ -1,8 +1,10 @@
 #include <io.hpp>
 #include <example.hpp>
+#include "measures.hpp"
 
 #include <iostream>
 #include <string>
+
 
 int main(int argc, char *argv[]){
 
@@ -22,6 +24,8 @@ int main(int argc, char *argv[]){
     std::cout << "The Genus of [" << meshPath << "] is = " << std::to_string(genus) << std::endl;
 
     geomAlgoLib::writeOFF(myMesh,"output.off");
+
+    geomAlgoLib::perimeter(myMesh);
 
     std::cout << "The end..." << std::endl;
     return 0;
