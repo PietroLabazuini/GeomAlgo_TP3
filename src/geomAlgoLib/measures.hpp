@@ -3,7 +3,8 @@
 
 namespace geomAlgoLib
 {
-    void perimeter(const Polyhedron & myMesh);
-
+    Facet_double_map perimeter(const Polyhedron & myMesh);
+    double getMaxValue(Facet_double_map map);
+    double getMinValue(Facet_double_map map);
 
 }

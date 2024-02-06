@@ -23,9 +23,12 @@ int main(int argc, char *argv[]){
     auto genus = geomAlgoLib::computeGenus(myMesh);
     std::cout << "The Genus of [" << meshPath << "] is = " << std::to_string(genus) << std::endl;
 
-    geomAlgoLib::writeOFF(myMesh,"output.off");
+    
 
-    geomAlgoLib::perimeter(myMesh);
+    geomAlgoLib::Facet_double_map tmp = geomAlgoLib::perimeter(myMesh);
+    geomAlgoLib::writeCOFF(myMesh,tmp,"output.off");
+
+    std::cout << "la valeur max est " << geomAlgoLib::getMaxValue(tmp) << std::endl;
 
     std::cout << "The end..." << std::endl;
     return 0;
