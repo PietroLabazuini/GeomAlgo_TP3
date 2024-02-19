@@ -17,4 +17,8 @@ bool readOFF(const std::string& filePath, Polyhedron& mesh);
 void writeOFF(const Polyhedron& mesh, const std::string& filePath);
 
 void writeCOFF(const Polyhedron& mesh, const Facet_double_map& faces, const std::string& filePath);
+
+void writeNormOFF(const Polyhedron& mesh, const Facet_double_map& faces,const std::string& filePath);
+
+void writeAngleOFF(const Polyhedron& mesh, const Facet_double_map& faces,const std::string& filePath);
 }
