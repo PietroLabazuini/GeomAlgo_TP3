@@ -35,10 +35,7 @@ int main(int argc, char *argv[]){
     // tmp = geomAlgoLib::angle(myMesh);
     // tmpStringMap = geomAlgoLib::segment_mesh(tmp,10);
     // geomAlgoLib::writeAngleOFF(myMesh,tmpStringMap,"outputangle.off");
-
-    
-
-    std::cout << "la valeur max est " << geomAlgoLib::getMaxValue(tmp) << std::endl;
+    //std::cout << "la valeur max est " << geomAlgoLib::getMaxValue(tmp) << std::endl;
 
     std::cout << "The end..." << std::endl;
     return 0;
