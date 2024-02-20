@@ -121,4 +121,30 @@ namespace geomAlgoLib
 
         return segmentation;
     }
+
+    Polyhedron & laplacien(const Polyhedron & myMesh,Polyhedron & newMesh){
+        newMesh = myMesh;
+        double sumx,sumy,sumz,newx,newy,newz;
+        for (Vertex_iterator vertex_iter = myMesh.vertices_begin(); vertex_iter != myMesh.vertices_end(); ++vertex_iter) {
+            CGAL::Point_3 point = vertex_iter->point();
+
+            std::vector<Kernel::Vector_3> tmp = findNeighbors(myMesh,point);
+            
+            sumx = 0;
+            sumy = 0;
+            sumz = 0;
+
+            for (const Kernel::Vector_3& vector : tmp) {
+                sumx += vector.x();
+                sumy += vector.y();
+                sumz += vector.z();
+            }
+
+            newx = sumx/tmp.size();
+            newy = sumy/tmp.size();
+            newz = sumz/tmp.size();
+
+        }
+        return newMesh;
+    }
 }
