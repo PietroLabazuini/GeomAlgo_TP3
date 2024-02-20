@@ -27,11 +27,14 @@ int main(int argc, char *argv[]){
 
     geomAlgoLib::Facet_double_map tmp = geomAlgoLib::perimeter(myMesh);
     geomAlgoLib::writeCOFF(myMesh,tmp,"output.off");
-    tmp= geomAlgoLib::norm_angle(myMesh);
-    geomAlgoLib::writeNormOFF(myMesh,tmp,"outputnorm.off");
+    
+    tmp = geomAlgoLib::norm_angle(myMesh);
+    geomAlgoLib::Facet_string_map tmpStringMap = geomAlgoLib::segment_mesh(tmp,45);
+    
+    geomAlgoLib::writeNormOFF(myMesh,tmpStringMap,"outputnorm.off");
     tmp = geomAlgoLib::angle(myMesh);
-    geomAlgoLib::segment_mesh(tmp,15);
-    geomAlgoLib::writeAngleOFF(myMesh,tmp,"outputangle.off");
+    tmpStringMap = geomAlgoLib::segment_mesh(tmp,10);
+    geomAlgoLib::writeAngleOFF(myMesh,tmpStringMap,"outputangle.off");
 
     std::cout << "la valeur max est " << geomAlgoLib::getMaxValue(tmp) << std::endl;
 

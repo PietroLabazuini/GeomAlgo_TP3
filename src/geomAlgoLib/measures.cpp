@@ -110,9 +110,9 @@ namespace geomAlgoLib
 
         // Parcourir chaque face et vérifier si la mesure dépasse le seuil
         for (const auto& entry : measures) {
-            if (entry.second > threshold) {
+            if (entry.second < threshold) {
                 // Associer une étiquette à la face
-                segmentation[entry.first] = "Grande face";
+                segmentation[entry.first] = "InfSeuil";
             } else {
                 // Face ne dépassant pas le seuil, pas besoin d'étiquette
                 segmentation[entry.first] = "";
