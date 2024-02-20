@@ -24,17 +24,19 @@ int main(int argc, char *argv[]){
     std::cout << "The Genus of [" << meshPath << "] is = " << std::to_string(genus) << std::endl;
 
     
+    //TP1
+    // geomAlgoLib::Facet_double_map tmp = geomAlgoLib::perimeter(myMesh);
+    // geomAlgoLib::writeCOFF(myMesh,tmp,"output.off");
+    
+    // tmp = geomAlgoLib::norm_angle(myMesh);
+    // geomAlgoLib::Facet_string_map tmpStringMap = geomAlgoLib::segment_mesh(tmp,45);
+    
+    // geomAlgoLib::writeNormOFF(myMesh,tmpStringMap,"outputnorm.off");
+    // tmp = geomAlgoLib::angle(myMesh);
+    // tmpStringMap = geomAlgoLib::segment_mesh(tmp,10);
+    // geomAlgoLib::writeAngleOFF(myMesh,tmpStringMap,"outputangle.off");
 
-    geomAlgoLib::Facet_double_map tmp = geomAlgoLib::perimeter(myMesh);
-    geomAlgoLib::writeCOFF(myMesh,tmp,"output.off");
     
-    tmp = geomAlgoLib::norm_angle(myMesh);
-    geomAlgoLib::Facet_string_map tmpStringMap = geomAlgoLib::segment_mesh(tmp,45);
-    
-    geomAlgoLib::writeNormOFF(myMesh,tmpStringMap,"outputnorm.off");
-    tmp = geomAlgoLib::angle(myMesh);
-    tmpStringMap = geomAlgoLib::segment_mesh(tmp,10);
-    geomAlgoLib::writeAngleOFF(myMesh,tmpStringMap,"outputangle.off");
 
     std::cout << "la valeur max est " << geomAlgoLib::getMaxValue(tmp) << std::endl;
 
