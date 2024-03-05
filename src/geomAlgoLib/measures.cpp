@@ -122,6 +122,7 @@ namespace geomAlgoLib
         return segmentation;
     }
 
+<<<<<<< Updated upstream
     Polyhedron & laplacien(Polyhedron & myMesh,Polyhedron & newMesh){
         newMesh = myMesh;
         double sumx,sumy,sumz,newx,newy,newz;
@@ -152,4 +153,27 @@ namespace geomAlgoLib
         }
         return newMesh;
     }
+=======
+    std::vector<Kernel::Vector_3> findNeighbors(const Polyhedron& mesh, const vertex_const_handle& vertex) {
+        std::vector<Kernel::Vector_3> voisins;
+        Halfedge_around_vertex_const_circulator cir = vertex->vertex_begin();
+        Halfedge_around_vertex_const_circulator end = cir;
+
+        if (!mesh.is_empty()) {
+            do {
+                // Get the neighbor vertex of the current halfedge
+                vertex_const_handle neighbor_vertex = cir->opposite()->vertex();
+                // Compute the vector from the current vertex to its neighbor
+                Kernel::Vector_3 neighbor_vector = neighbor_vertex->point() - vertex->point();
+                // Add the neighbor vector to the list
+                voisins.push_back(neighbor_vector);
+            } while (++cir != end);
+        }
+
+        return voisins;
+
+    }
+
+    
+>>>>>>> Stashed changes
 }
