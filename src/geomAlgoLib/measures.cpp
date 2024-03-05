@@ -165,6 +165,7 @@ namespace geomAlgoLib
                 Kernel::Vector_3 neighbor_vector = neighbor_vertex->point() - vertex->point();
                 // Add the neighbor vector to the list
                 voisins.push_back(neighbor_vector);
+                //printf("%d\n",cir);
             } while (++cir != end);
         }
 
