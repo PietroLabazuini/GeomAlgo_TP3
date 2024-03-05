@@ -122,12 +122,11 @@ namespace geomAlgoLib
         return segmentation;
     }
 
-<<<<<<< Updated upstream
-    Polyhedron & laplacien(Polyhedron & myMesh,Polyhedron & newMesh){
-        newMesh = myMesh;
+    Polyhedron laplacien(Polyhedron & myMesh,Polyhedron & newMesh){
+
         double sumx,sumy,sumz,newx,newy,newz;
-        Vertex_iterator new_vertex_iter = newMesh.vertices_begin();
-        for (Vertex_iterator vertex_iter = myMesh.vertices_begin(); vertex_iter != myMesh.vertices_end(); ++vertex_iter) {
+        auto new_vertex_iter = newMesh.vertices_begin();
+        for (auto vertex_iter = myMesh.vertices_begin(); vertex_iter != myMesh.vertices_end(); ++vertex_iter) {
             
             std::vector<Kernel::Vector_3> tmp = findNeighbors(myMesh,vertex_iter);
             
@@ -146,14 +145,13 @@ namespace geomAlgoLib
             newz = sumz/tmp.size();
 
             CGAL::Point_3<Kernel> newPoint(newx,newy,newz);
-            CGAL::Point_3<Kernel> oldPoint = new_vertex_iter->point();
-            oldPoint = newPoint;
-
+            //printf("Old coordinates : %f %f %f\n",new_vertex_iter->point().x(),new_vertex_iter->point().y(),new_vertex_iter->point().z());
+            new_vertex_iter->point()=newPoint;
+            //printf("New coordinates : %f %f %f\n",new_vertex_iter->point().x(),new_vertex_iter->point().y(),new_vertex_iter->point().z());
             ++new_vertex_iter;
         }
         return newMesh;
     }
-=======
     std::vector<Kernel::Vector_3> findNeighbors(const Polyhedron& mesh, const vertex_const_handle& vertex) {
         std::vector<Kernel::Vector_3> voisins;
         Halfedge_around_vertex_const_circulator cir = vertex->vertex_begin();
@@ -175,5 +173,4 @@ namespace geomAlgoLib
     }
 
     
->>>>>>> Stashed changes
 }
