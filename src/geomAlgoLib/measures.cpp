@@ -122,13 +122,13 @@ namespace geomAlgoLib
         return segmentation;
     }
 
-    Polyhedron & laplacien(const Polyhedron & myMesh,Polyhedron & newMesh){
+    Polyhedron & laplacien(Polyhedron & myMesh,Polyhedron & newMesh){
         newMesh = myMesh;
         double sumx,sumy,sumz,newx,newy,newz;
+        Vertex_iterator new_vertex_iter = newMesh.vertices_begin();
         for (Vertex_iterator vertex_iter = myMesh.vertices_begin(); vertex_iter != myMesh.vertices_end(); ++vertex_iter) {
-            CGAL::Point_3 point = vertex_iter->point();
-
-            std::vector<Kernel::Vector_3> tmp = findNeighbors(myMesh,point);
+            
+            std::vector<Kernel::Vector_3> tmp = findNeighbors(myMesh,vertex_iter);
             
             sumx = 0;
             sumy = 0;
@@ -144,6 +144,11 @@ namespace geomAlgoLib
             newy = sumy/tmp.size();
             newz = sumz/tmp.size();
 
+            CGAL::Point_3<Kernel> newPoint(newx,newy,newz);
+            CGAL::Point_3<Kernel> oldPoint = new_vertex_iter->point();
+            oldPoint = newPoint;
+
+            ++new_vertex_iter;
         }
         return newMesh;
     }
