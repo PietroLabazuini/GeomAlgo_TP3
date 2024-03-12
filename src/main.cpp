@@ -44,12 +44,16 @@ int main(int argc, char *argv[]){
     //     myMesh = newMesh;
     // }
     // geomAlgoLib::writeOFF(newMesh,"output_laplacien.off");
-    for(int i = 0;i<10; i++){
-        geomAlgoLib::gaussien(myMesh,newMesh, 0.33);
-        myMesh = newMesh;
-    }
+    //for(int i = 0;i<10; i++){
+    //    geomAlgoLib::gaussien(myMesh,newMesh, 0.33);
+    //    myMesh = newMesh;
+    //}
+    //geomAlgoLib::writeOFF(newMesh,"output_gaussien.off");
     
-    geomAlgoLib::writeOFF(newMesh,"output_gaussien.off");
+    newMesh = geomAlgoLib::taubin(myMesh,newMesh,0.33,-0.34,100);
+    geomAlgoLib::writeOFF(newMesh,"output_taubin.off");
+
+    
 
     std::cout << "The end..." << std::endl;
     return 0;
