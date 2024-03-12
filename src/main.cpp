@@ -39,11 +39,18 @@ int main(int argc, char *argv[]){
     //std::cout << "la valeur max est " << geomAlgoLib::getMaxValue(tmp) << std::endl;
 
     //TP4
-    for(int i = 0; i<10; i++){
-        geomAlgoLib::laplacien(myMesh,newMesh);
+    // for(int i = 0; i<10; i++){
+    //     geomAlgoLib::laplacien(myMesh,newMesh);
+    //     myMesh = newMesh;
+    // }
+    // geomAlgoLib::writeOFF(newMesh,"output_laplacien.off");
+    for(int i = 0;i<10; i++){
+        geomAlgoLib::gaussien(myMesh,newMesh, 0.33);
         myMesh = newMesh;
     }
-    geomAlgoLib::writeOFF(newMesh,"output_laplacien.off");
+    
+    geomAlgoLib::writeOFF(newMesh,"output_gaussien.off");
+
     std::cout << "The end..." << std::endl;
     return 0;
 }

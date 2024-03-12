@@ -170,5 +170,46 @@ namespace geomAlgoLib
 
     }
 
-    
+    Polyhedron gaussien(Polyhedron & myMesh,Polyhedron & newMesh, double lambda){
+
+        double sumx,sumy,sumz,newx,newy,newz,actualx,actualy,actualz,deltax,deltay,deltaz;
+        auto new_vertex_iter = newMesh.vertices_begin();
+        for (auto vertex_iter = myMesh.vertices_begin(); vertex_iter != myMesh.vertices_end(); ++vertex_iter) {
+            actualx = vertex_iter->point().x();
+            actualy = vertex_iter->point().y();
+            actualz = vertex_iter->point().z();
+            std::vector<Kernel::Vector_3> tmp = findNeighbors(myMesh,vertex_iter);
+            
+            sumx = 0;
+            sumy = 0;
+            sumz = 0;
+
+            for (const Kernel::Vector_3& vector : tmp) {
+                sumx += vector.x();
+                sumy += vector.y();
+                sumz += vector.z();
+            }
+
+            newx = sumx/tmp.size();
+            newy = sumy/tmp.size();
+            newz = sumz/tmp.size();
+
+            deltax = newx - actualx;
+            deltay = newy - actualy;
+            deltaz = newz - actualz;
+
+            newx = actualx + lambda*deltax;
+            newy = actualy + lambda*deltay;
+            newz = actualz + lambda*deltaz;
+
+
+
+            CGAL::Point_3<Kernel> newPoint(newx,newy,newz);
+            //printf("Old coordinates : %f %f %f\n",new_vertex_iter->point().x(),new_vertex_iter->point().y(),new_vertex_iter->point().z());
+            new_vertex_iter->point()=newPoint;
+            //printf("New coordinates : %f %f %f\n",new_vertex_iter->point().x(),new_vertex_iter->point().y(),new_vertex_iter->point().z());
+            ++new_vertex_iter;
+        }
+        return newMesh;
+    }
 }

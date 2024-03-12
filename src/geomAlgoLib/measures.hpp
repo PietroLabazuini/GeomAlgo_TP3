@@ -11,5 +11,6 @@ namespace geomAlgoLib
     Facet_string_map segment_mesh(const Facet_double_map& measures, double threshold);
     // std::vector<Kernel::Vector_3>
     Polyhedron laplacien(Polyhedron & myMesh,Polyhedron & newMesh);
+    Polyhedron gaussien(Polyhedron & myMesh,Polyhedron & newMesh, double lambda);
     std::vector<Kernel::Vector_3> findNeighbors(const Polyhedron& mesh, const vertex_const_handle& vertex);
 }
