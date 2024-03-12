@@ -159,16 +159,13 @@ namespace geomAlgoLib
 
         if (!mesh.is_empty()) {
             do {
-                // Get the neighbor vertex of the current halfedge
+                
                 vertex_const_handle neighbor_vertex = cir->opposite()->vertex();
-                // Compute the vector from the current vertex to its neighbor
-                Kernel::Vector_3 neighbor_vector = neighbor_vertex->point() - vertex->point();
-                // Add the neighbor vector to the list
+                Kernel::Vector_3 neighbor_vector(neighbor_vertex->point().x(), neighbor_vertex->point().y(), neighbor_vertex->point().z());
                 voisins.push_back(neighbor_vector);
                 //printf("%d\n",cir);
             } while (++cir != end);
         }
-
         return voisins;
 
     }
