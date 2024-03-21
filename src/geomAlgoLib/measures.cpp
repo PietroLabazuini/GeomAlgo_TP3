@@ -266,4 +266,42 @@ namespace geomAlgoLib
     }
 
     //FREE FORM
+
+    std::map<int,Vertex_double_map> influence_map(const Polyhedron & myMesh,const Polyhedron & AABB_Box){
+        std::map<int,Vertex_double_map> influence_maps;
+        int map_id = 0;
+
+        //1 ITERATION = 1 POINT DE LA BOX
+        for (auto vertex_iter = AABB_Box.vertices_begin(); vertex_iter != AABB_Box.vertices_end(); ++vertex_iter) {
+            Halfedge_around_vertex_const_circulator halfedge = vertex_iter->vertex_begin();
+
+            //CALCUL DES VECTEURS INCIDENTS AU POINT DE LA BOX
+            Kernel::Vector_3 vecs[3];
+            int i =0;
+            do{
+                vertex_const_handle opposite_vertex = halfedge->opposite()->vertex();
+                Kernel::Vector_3 vector(opposite_vertex->point().x()-vertex_iter->point().x(),opposite_vertex->point().y()-vertex_iter->point().y(),opposite_vertex->point().z()-vertex_iter->point().z());
+                vecs[i] = vector;
+                ++i;
+                ++halfedge;
+            }
+            while(halfedge!=vertex_iter->vertex_begin());
+
+            //PROJECTION DES POINTS DU MESH SUR CES VECTEURS
+            for (auto vertex_iter2 = myMesh.vertices_begin(); vertex_iter2 != myMesh.vertices_end(); ++vertex_iter2) {
+                float influence = 1;
+                for (i = 0; i < 3; i++){
+                    Point3 point = vertex_iter2->point();
+                    CGAL::Line_3<Kernel> line(point,vecs[i]);
+                    Point3 projected_point = line.projection(point);
+
+                    //CALCUL DE LA DISTANCE ET DE L'INFLUENCE
+
+                    influence *= sqrt(squared_distance(projected_point,vertex_iter->point()));
+                }
+            }
+            map_id++;
+        }
+        return influence_maps;
+    }
 }

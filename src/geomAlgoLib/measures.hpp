@@ -14,4 +14,5 @@ namespace geomAlgoLib
     Polyhedron gaussien(Polyhedron & myMesh,Polyhedron & newMesh, double lambda);
     Polyhedron taubin(Polyhedron & myMesh,Polyhedron & newMesh, double lambda, double mu,int nb_ite);
     std::vector<Kernel::Vector_3> findNeighbors(const Polyhedron& mesh, const vertex_const_handle& vertex);
+    std::map<int,Vertex_double_map> influence_map(const Polyhedron & myMesh);
 }
