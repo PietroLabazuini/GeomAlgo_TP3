@@ -39,6 +39,49 @@ int main(int argc, char *argv[]){
     //std::cout << "la valeur max est " << geomAlgoLib::getMaxValue(tmp) << std::endl;
 
     //TP4
+
+    //Lissage Laplacien
+    // geomAlgoLib::Polyhedron LaplacienMesh = myMesh;
+
+    int iteration[5] = {1, 10, 50, 100, 1000};
+
+    // for (int i = 0; i < 5; i++){
+    //     for(int j; j < iteration[i]; j++){
+    //         geomAlgoLib::laplacien(LaplacienMesh,newMesh);
+    //         LaplacienMesh = newMesh;
+    //     }
+    //     std::string outputFilename = "output_laplacien_" + std::to_string(iteration[i]) + ".off";
+    //     geomAlgoLib::writeOFF(LaplacienMesh, outputFilename);
+    //     LaplacienMesh = myMesh;
+    // }
+
+    //Lissage Gaussien
+    geomAlgoLib::Polyhedron GaussienMesh = myMesh;
+    //Test du meilleur paramètre
+
+    // float parametre[5] = {0.1,0.33,0.5,1,1.5};
+    // for (int i = 0; i < 5; i++){
+    //     for(int j = 0; j < 10; j++){
+    //         geomAlgoLib::gaussien(GaussienMesh,newMesh,parametre[i]);
+    //         GaussienMesh = newMesh;
+    //     }
+    //     std::string outputFilename = "output_gaussien_" + std::to_string(parametre[i]) + ".off";
+    //     geomAlgoLib::writeOFF(GaussienMesh, outputFilename);
+    //     GaussienMesh = myMesh;
+    // }
+
+    //Influence du nombre d'iterations
+    
+    // for (int i = 0; i < 5; i++){
+    //     for(int j; j < iteration[i]; j++){
+    //         geomAlgoLib::gaussien(GaussienMesh,newMesh,0.33);
+    //         GaussienMesh = newMesh;
+    //     }
+    //     std::string outputFilename = "output_gaussien_" + std::to_string(iteration[i]) + ".off";
+    //     geomAlgoLib::writeOFF(GaussienMesh, outputFilename);
+    //     GaussienMesh = myMesh;
+    // }
+
     // for(int i = 0; i<10; i++){
     //     geomAlgoLib::laplacien(myMesh,newMesh);
     //     myMesh = newMesh;
@@ -77,6 +120,9 @@ int main(int argc, char *argv[]){
     /*for (int i = 0; i < 8; ++i) {
         std::cout << "Sommet " << i+1 << ": " << vertices[i] << std::endl;
     }*/
+    }
+    myMesh = geomAlgoLib::createMeshFromBoundingBoxVertices(vertices);
+    geomAlgoLib::writeOFF(myMesh,"test_bboxmesh.off");
 
     return 0;
 }
