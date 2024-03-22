@@ -93,8 +93,7 @@ int main(int argc, char *argv[]){
     //}
     //geomAlgoLib::writeOFF(newMesh,"output_gaussien.off");
     
-    /*newMesh = geomAlgoLib::taubin(myMesh,newMesh,0.33,-0.34,100);
-    geomAlgoLib::writeOFF(newMesh,"output_taubin.off");
+    /*
 
     for(int i = 0;i<1000; i++){
         geomAlgoLib::gaussien(myMesh,newMesh, 0.33);
@@ -102,7 +101,8 @@ int main(int argc, char *argv[]){
     }*/
     
 
-    //std::cout << "The end..." << std::endl;
+    /*newMesh = geomAlgoLib::taubin(myMesh,newMesh,0.33,-0.34,1000);
+    geomAlgoLib::writeOFF(newMesh,"output_taubin.off");*/
 
 
     std::array<geomAlgoLib::Point3, 8> vertices = geomAlgoLib::calculateBoundingBoxVertices(geomAlgoLib::box(myMesh));
@@ -111,11 +111,12 @@ int main(int argc, char *argv[]){
 
     std::map<geomAlgoLib::vertex_const_handle,geomAlgoLib::Vertex_double_map> influence_map = geomAlgoLib::calculate_influence_map(myMesh,Bounding_Mesh);
 
-    CGAL::Vector_3<CGAL::Exact_predicates_inexact_constructions_kernel> vect(5,0,0);
+    CGAL::Vector_3<CGAL::Exact_predicates_inexact_constructions_kernel> vect(1,1,0);
     geomAlgoLib::translate_free_form(myMesh,vect,Bounding_Mesh.vertices_begin(),influence_map);
 
     geomAlgoLib::writeOFF(myMesh,"output_free_form.off");
 
+<<<<<<< HEAD
     // Maintenant, vous pouvez accéder aux coordonnées des sommets comme suit
     /*for (int i = 0; i < 8; ++i) {
         std::cout << "Sommet " << i+1 << ": " << vertices[i] << std::endl;
@@ -123,6 +124,9 @@ int main(int argc, char *argv[]){
     }
     myMesh = geomAlgoLib::createMeshFromBoundingBoxVertices(vertices);
     geomAlgoLib::writeOFF(myMesh,"test_bboxmesh.off");
+=======
+    //std::cout << "The end..." << std::endl;
+>>>>>>> 4dda39a (Correction formule influence)
 
     return 0;
 }

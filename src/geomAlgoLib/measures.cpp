@@ -289,7 +289,9 @@ namespace geomAlgoLib
                     Point3 projected_point = line.projection(point);
                     
                     //CALCUL DE LA DISTANCE ET DE L'INFLUENCE
-                    influence *= sqrt(squared_distance(projected_point,vertex_iter->point()))/sqrt(squared_distance(vertex_iter->point(),opposite_vertex->point()));
+                    float projected_distance = sqrt(squared_distance(projected_point,vertex_iter->point()));
+                    float opposite_distance = sqrt(squared_distance(vertex_iter->point(),opposite_vertex->point()));
+                    influence *= (opposite_distance - projected_distance)/opposite_distance;
                     std::cout << sqrt(squared_distance(projected_point,vertex_iter->point())) << std::endl;
                     
                     //PASSAGE AU PROCHAIN POINT OPPOSE
