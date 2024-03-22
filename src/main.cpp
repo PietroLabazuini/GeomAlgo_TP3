@@ -68,11 +68,15 @@ int main(int argc, char *argv[]){
 
     std::map<geomAlgoLib::vertex_const_handle,geomAlgoLib::Vertex_double_map> influence_map = geomAlgoLib::calculate_influence_map(myMesh,Bounding_Mesh);
 
+    CGAL::Vector_3<CGAL::Exact_predicates_inexact_constructions_kernel> vect(5,0,0);
+    geomAlgoLib::translate_free_form(myMesh,vect,Bounding_Mesh.vertices_begin(),influence_map);
+
+    geomAlgoLib::writeOFF(myMesh,"output_free_form.off");
 
     // Maintenant, vous pouvez accéder aux coordonnées des sommets comme suit
-    for (int i = 0; i < 8; ++i) {
+    /*for (int i = 0; i < 8; ++i) {
         std::cout << "Sommet " << i+1 << ": " << vertices[i] << std::endl;
-    }
+    }*/
 
     return 0;
 }

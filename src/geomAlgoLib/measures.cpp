@@ -272,44 +272,44 @@ namespace geomAlgoLib
 
         //1 ITERATION = 1 POINT DE LA BOX
         for (auto vertex_iter = AABB_Box.vertices_begin(); vertex_iter != AABB_Box.vertices_end(); ++vertex_iter) {
-            Halfedge_around_vertex_const_circulator halfedge = vertex_iter->vertex_begin();
-
-            //CALCUL DES VECTEURS INCIDENTS AU POINT DE LA BOX
-            Kernel::Vector_3 vecs[3];
-            int i =0;
-            do{
-                vertex_const_handle opposite_vertex = halfedge->opposite()->vertex();
-                Kernel::Vector_3 vector(opposite_vertex->point().x()-vertex_iter->point().x(),opposite_vertex->point().y()-vertex_iter->point().y(),opposite_vertex->point().z()-vertex_iter->point().z());
-                vecs[i] = vector;
-                ++i;
-                ++halfedge;
-            }
-            while(halfedge!=vertex_iter->vertex_begin());
-
+            
             //PROJECTION DES POINTS DU MESH SUR CES VECTEURS
             for (auto vertex_iter2 = myMesh.vertices_begin(); vertex_iter2 != myMesh.vertices_end(); ++vertex_iter2) {
                 float influence = 1;
-                for (i = 0; i < 3; i++){
+                Halfedge_around_vertex_const_circulator halfedge = vertex_iter->vertex_begin();
+
+                do{
+                    //CALCUL DU VECTEUR ENTRE LE POINT DE LA BOUNDING BOX ACTUEL ET UN POINT OPPOSE
+                    vertex_const_handle opposite_vertex = halfedge->opposite()->vertex();
+                    Kernel::Vector_3 vector(opposite_vertex->point().x()-vertex_iter->point().x(),opposite_vertex->point().y()-vertex_iter->point().y(),opposite_vertex->point().z()-vertex_iter->point().z());
+                    
+                    //PROJECTION DU POINT DU MESH SUR LE VECTEUR
                     Point3 point = vertex_iter2->point();
-                    CGAL::Line_3<Kernel> line(point,vecs[i]);
+                    CGAL::Line_3<Kernel> line(vertex_iter->point(),vector);//droite passant par le point de la bounding box et suivant l'équation du vecteur calcule
                     Point3 projected_point = line.projection(point);
-
+                    
                     //CALCUL DE LA DISTANCE ET DE L'INFLUENCE
-
-                    influence *= sqrt(squared_distance(projected_point,vertex_iter->point()));
-                    influence_maps[vertex_iter][vertex_iter2] =  influence;
+                    influence *= sqrt(squared_distance(projected_point,vertex_iter->point()))/sqrt(squared_distance(vertex_iter->point(),opposite_vertex->point()));
+                    std::cout << sqrt(squared_distance(projected_point,vertex_iter->point())) << std::endl;
+                    
+                    //PASSAGE AU PROCHAIN POINT OPPOSE
+                    ++halfedge;
                 }
+                while(halfedge!=vertex_iter->vertex_begin());
+                
+                std::cout << std::endl;
+                influence_maps[vertex_iter][vertex_iter2] =  influence;
             }
             map_id++;
         }
         return influence_maps;
     }
     CGAL::Bbox_3 box(const Polyhedron& mesh) {
-        // Créez un itérateur pour parcourir les points du maillage
+        //itérateur pour parcourir les points du maillage
         auto begin = mesh.points_begin();
         auto end = mesh.points_end();
 
-        // Utilisez la fonction bbox_3 pour calculer la boîte de délimitation des points du maillage
+        //délimitation des points du maillage
         return CGAL::bbox_3(begin, end);
     }
 
@@ -334,9 +334,6 @@ namespace geomAlgoLib
         vertices[6] = Point3(xmax, ymin, zmax);
         vertices[7] = Point3(xmax, ymax, zmax);
         
-        
-        
-
         return vertices;
     }
 
@@ -346,8 +343,14 @@ namespace geomAlgoLib
         return mesh;
     }
 
-    void translate_free_form(Polyhedron & myMesh, Kernel::Vector_3 translation, std::map<vertex_const_handle,Vertex_double_map> influence_map){
+    void translate_free_form(Polyhedron & myMesh, Kernel::Vector_3 translation, vertex_const_handle bounding_vertex, std::map<vertex_const_handle,Vertex_double_map> influence_map){
 
-        
+        for(Polyhedron::Vertex_iterator vertex_iter = myMesh.vertices_begin();vertex_iter != myMesh.vertices_end(); ++vertex_iter){
+            Point3 point = vertex_iter->point();
+            std::cout << influence_map.at(bounding_vertex).at(vertex_iter) << std::endl;
+            Kernel::Vector_3 translation_vector = translation * influence_map.at(bounding_vertex).at(vertex_iter);
+            point += translation_vector;
+            vertex_iter->point() = point;
+        }
     }
 }

@@ -18,4 +18,5 @@ namespace geomAlgoLib
     CGAL::Bbox_3 box(const Polyhedron& mesh);
     std::array<Point3, 8> calculateBoundingBoxVertices(CGAL::Bbox_3 bbox);
     Polyhedron createMeshFromBoundingBoxVertices(const std::array<Point3, 8>& vertices);
+    void translate_free_form(Polyhedron & myMesh, Kernel::Vector_3 translation, vertex_const_handle bounding_vertex, std::map<vertex_const_handle,Vertex_double_map> influence_map);
 }
