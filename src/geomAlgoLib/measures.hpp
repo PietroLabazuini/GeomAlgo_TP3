@@ -17,4 +17,5 @@ namespace geomAlgoLib
     std::map<int,Vertex_double_map> influence_map(const Polyhedron & myMesh);
     CGAL::Bbox_3 box(const Polyhedron& mesh);
     std::array<Point3, 8> calculateBoundingBoxVertices(CGAL::Bbox_3 bbox);
+    Polyhedron createMeshFromBoundingBoxVertices(const std::array<Point3, 8>& vertices);
 }

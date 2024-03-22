@@ -335,5 +335,10 @@ namespace geomAlgoLib
 
         return vertices;
     }
-
+    
+    Polyhedron createMeshFromBoundingBoxVertices(const std::array<Point3, 8>& vertices) {
+        Polyhedron mesh;
+        CGAL::make_hexahedron(vertices[0], vertices[1], vertices[2], vertices[3],vertices[4], vertices[5], vertices[6], vertices[7], mesh);
+        return mesh;
+    }
 }
