@@ -15,4 +15,6 @@ namespace geomAlgoLib
     Polyhedron taubin(Polyhedron & myMesh,Polyhedron & newMesh, double lambda, double mu,int nb_ite);
     std::vector<Kernel::Vector_3> findNeighbors(const Polyhedron& mesh, const vertex_const_handle& vertex);
     std::map<int,Vertex_double_map> influence_map(const Polyhedron & myMesh);
+    CGAL::Bbox_3 box(const Polyhedron& mesh);
+    std::array<Point3, 8> calculateBoundingBoxVertices(CGAL::Bbox_3 bbox);
 }

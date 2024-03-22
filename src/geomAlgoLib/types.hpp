@@ -14,6 +14,7 @@ using Polyhedron = CGAL::Polyhedron_3<Kernel>;
 using Point3 = CGAL::Point_3<Kernel>;
 using Projection_traits = CGAL::Projection_traits_xy_3<Kernel>;
 
+
 using Facet_iterator = Polyhedron::Facet_const_iterator;
 using Vertex_iterator = Polyhedron::Vertex_const_iterator;
 using Halfedge_iterator = Polyhedron::Halfedge_const_iterator;

@@ -53,8 +53,21 @@ int main(int argc, char *argv[]){
     newMesh = geomAlgoLib::taubin(myMesh,newMesh,0.33,-0.34,100);
     geomAlgoLib::writeOFF(newMesh,"output_taubin.off");
 
+    for(int i = 0;i<1000; i++){
+        geomAlgoLib::gaussien(myMesh,newMesh, 0.33);
+        myMesh = newMesh;
+    }
     
 
     std::cout << "The end..." << std::endl;
+
+
+    std::array<geomAlgoLib::Point3, 8> vertices = geomAlgoLib::calculateBoundingBoxVertices(geomAlgoLib::box(myMesh));
+
+    // Maintenant, vous pouvez accéder aux coordonnées des sommets comme suit
+    for (int i = 0; i < 8; ++i) {
+        std::cout << "Sommet " << i+1 << ": " << vertices[i] << std::endl;
+    }
+
     return 0;
 }

@@ -167,7 +167,6 @@ namespace geomAlgoLib
             } while (++cir != end);
         }
         return voisins;
-
     }
 
     Polyhedron gaussien(Polyhedron & myMesh,Polyhedron & newMesh, double lambda){
@@ -304,4 +303,37 @@ namespace geomAlgoLib
         }
         return influence_maps;
     }
+    CGAL::Bbox_3 box(const Polyhedron& mesh) {
+        // Créez un itérateur pour parcourir les points du maillage
+        auto begin = mesh.points_begin();
+        auto end = mesh.points_end();
+
+        // Utilisez la fonction bbox_3 pour calculer la boîte de délimitation des points du maillage
+        return CGAL::bbox_3(begin, end);
+    }
+
+    std::array<Point3, 8> calculateBoundingBoxVertices(CGAL::Bbox_3 bbox) {
+        std::array<Point3, 8> vertices;
+
+        // Les sommets de la boîte de délimitation peuvent être calculés à partir de ses coordonnées minimales et maximales
+        double xmin = bbox.xmin();
+        double ymin = bbox.ymin();
+        double zmin = bbox.zmin();
+        double xmax = bbox.xmax();
+        double ymax = bbox.ymax();
+        double zmax = bbox.zmax();
+
+        // Les huit sommets peuvent être calculés en combinant les différentes combinaisons des coordonnées minimales et maximales
+        vertices[0] = Point3(xmin, ymin, zmin);
+        vertices[1] = Point3(xmax, ymin, zmin);
+        vertices[2] = Point3(xmin, ymax, zmin);
+        vertices[3] = Point3(xmax, ymax, zmin);
+        vertices[4] = Point3(xmin, ymin, zmax);
+        vertices[5] = Point3(xmax, ymin, zmax);
+        vertices[6] = Point3(xmin, ymax, zmax);
+        vertices[7] = Point3(xmax, ymax, zmax);
+
+        return vertices;
+    }
+
 }
