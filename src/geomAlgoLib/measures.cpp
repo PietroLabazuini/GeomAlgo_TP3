@@ -324,18 +324,21 @@ namespace geomAlgoLib
         double zmax = bbox.zmax();
 
         // Les huit sommets peuvent être calculés en combinant les différentes combinaisons des coordonnées minimales et maximales
-        vertices[0] = Point3(xmin, ymin, zmin);
-        vertices[1] = Point3(xmax, ymin, zmin);
-        vertices[2] = Point3(xmin, ymax, zmin);
-        vertices[3] = Point3(xmax, ymax, zmin);
-        vertices[4] = Point3(xmin, ymin, zmax);
-        vertices[5] = Point3(xmax, ymin, zmax);
-        vertices[6] = Point3(xmin, ymax, zmax);
+        vertices[0] = Point3(xmin, ymin, zmin); //PO
+        vertices[1] = Point3(xmax, ymin, zmin); //P1
+        vertices[2] = Point3(xmax, ymax, zmin); //P2
+        vertices[3] = Point3(xmin, ymax, zmin); //P3
+        vertices[4] = Point3(xmin, ymax, zmax); //P4
+        vertices[5] = Point3(xmin, ymin, zmax);
+        vertices[6] = Point3(xmax, ymin, zmax);
         vertices[7] = Point3(xmax, ymax, zmax);
+        
+        
+        
 
         return vertices;
     }
-    
+
     Polyhedron createMeshFromBoundingBoxVertices(const std::array<Point3, 8>& vertices) {
         Polyhedron mesh;
         CGAL::make_hexahedron(vertices[0], vertices[1], vertices[2], vertices[3],vertices[4], vertices[5], vertices[6], vertices[7], mesh);
