@@ -50,19 +50,24 @@ int main(int argc, char *argv[]){
     //}
     //geomAlgoLib::writeOFF(newMesh,"output_gaussien.off");
     
-    newMesh = geomAlgoLib::taubin(myMesh,newMesh,0.33,-0.34,100);
+    /*newMesh = geomAlgoLib::taubin(myMesh,newMesh,0.33,-0.34,100);
     geomAlgoLib::writeOFF(newMesh,"output_taubin.off");
 
     for(int i = 0;i<1000; i++){
         geomAlgoLib::gaussien(myMesh,newMesh, 0.33);
         myMesh = newMesh;
-    }
+    }*/
     
 
-    std::cout << "The end..." << std::endl;
+    //std::cout << "The end..." << std::endl;
 
 
     std::array<geomAlgoLib::Point3, 8> vertices = geomAlgoLib::calculateBoundingBoxVertices(geomAlgoLib::box(myMesh));
+
+    geomAlgoLib::Polyhedron Bounding_Mesh = geomAlgoLib::createMeshFromBoundingBoxVertices(vertices);
+
+    std::map<geomAlgoLib::vertex_const_handle,geomAlgoLib::Vertex_double_map> influence_map = geomAlgoLib::calculate_influence_map(myMesh,Bounding_Mesh);
+
 
     // Maintenant, vous pouvez accéder aux coordonnées des sommets comme suit
     for (int i = 0; i < 8; ++i) {

@@ -266,8 +266,8 @@ namespace geomAlgoLib
 
     //FREE FORM
 
-    std::map<int,Vertex_double_map> influence_map(const Polyhedron & myMesh,const Polyhedron & AABB_Box){
-        std::map<int,Vertex_double_map> influence_maps;
+    std::map<vertex_const_handle,Vertex_double_map> calculate_influence_map(const Polyhedron & myMesh,const Polyhedron & AABB_Box){
+        std::map<vertex_const_handle,Vertex_double_map> influence_maps;
         int map_id = 0;
 
         //1 ITERATION = 1 POINT DE LA BOX
@@ -297,6 +297,7 @@ namespace geomAlgoLib
                     //CALCUL DE LA DISTANCE ET DE L'INFLUENCE
 
                     influence *= sqrt(squared_distance(projected_point,vertex_iter->point()));
+                    influence_maps[vertex_iter][vertex_iter2] =  influence;
                 }
             }
             map_id++;
@@ -343,5 +344,10 @@ namespace geomAlgoLib
         Polyhedron mesh;
         CGAL::make_hexahedron(vertices[0], vertices[1], vertices[2], vertices[3],vertices[4], vertices[5], vertices[6], vertices[7], mesh);
         return mesh;
+    }
+
+    void translate_free_form(Polyhedron & myMesh, Kernel::Vector_3 translation, std::map<vertex_const_handle,Vertex_double_map> influence_map){
+
+        
     }
 }
